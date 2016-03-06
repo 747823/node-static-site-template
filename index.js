@@ -10,9 +10,11 @@ var Fs = require( "fs" );
 // For production sites, it might be best to proxy this from port 80 via another server like apache
 var HTTP_PORT = ( process.env.PORT ) ? process.env.PORT : 3000;
 
+// Base public directory
+var BASE_DIR = __dirname + "/public";
+
 
 ( function() {
-
 
   // Start express server
   var app = Express();
@@ -24,7 +26,7 @@ var HTTP_PORT = ( process.env.PORT ) ? process.env.PORT : 3000;
 
 
   // SASS renderer
-  app.use( RenderSass( __dirname + "/public" ) );
+  app.use( RenderSass( BASE_DIR ) );
 
 
   // Redirect anything ending in no slash or index.html to the directory root with trailing slash
@@ -60,8 +62,8 @@ var HTTP_PORT = ( process.env.PORT ) ? process.env.PORT : 3000;
   app.use( function( req, res, next ) {
     // If the url ends in a slash, try to render a jade file here
     if ( req.url.match( /\/$/ ) ) {
-      var jadeFilePath = __dirname + "/public" + req.url + "index.jade";
-      console.log( "Attempting to access " + jadeFilePath );
+      var jadeFilePath = BASE_DIR + req.url + "index.jade";
+      // console.log( "Attempting to access " + jadeFilePath );
       try {
         // This will throw an error to catch if the jade file doesn't exist
         Fs.accessSync( jadeFilePath );
@@ -81,7 +83,7 @@ var HTTP_PORT = ( process.env.PORT ) ? process.env.PORT : 3000;
 
 
   // Serve static files from public directory
-  app.use( Express.static( __dirname + "/public", {
+  app.use( Express.static( BASE_DIR, {
     index: false,
     maxAge: 1,
     setHeaders: function( res, path, stat ) {
@@ -92,7 +94,7 @@ var HTTP_PORT = ( process.env.PORT ) ? process.env.PORT : 3000;
 
   // Handle anything else as 404
   app.use( function( req, res, next ) {
-    res.status( 404 ).send( Jade.renderFile( __dirname + "/public/404.jade", {
+    res.status( 404 ).send( Jade.renderFile( BASE_DIR + "/404.jade", {
       pretty: "  "
     } ) );
   } );

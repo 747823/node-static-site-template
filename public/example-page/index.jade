@@ -1,0 +1,20 @@
+
+//- Note that the path to inclide files from /parts/ is different than on the main page, because it's relative to this directory
+//- Can't find a very good solution for dynamic include paths unfortunately
+//- If desired, replace it with the full path of the site's base directory
+
+include ../parts/header.jade
+title Default Title | Example Page
+meta( name="description", content="No description yet" )
+include ../parts/assets.jade
+
+!= "</head>"
+
+body
+  p This is an example of a different page on the site!
+  p
+    a( href="/" ) Return to the main page
+
+  include ../parts/footer-assets.jade
+
+!= "</html>"
