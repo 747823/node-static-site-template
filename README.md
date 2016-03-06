@@ -3,10 +3,10 @@ This is a basic template package for quickly building small static sites on Node
 
 ### Main Features - How it Works
 * Anything in the public directory is served statically
-* Any index.html files are redirected to their directory root
+* Any urls ending in index.html are redirected to their directory root
 * Any non-filename paths are redirected to the trailing slash version (if they weren't originally)
 * Any path under public will automatically render its respective .jade file. For example, if the file structure "/public/test/index.jade" exists, then going to "http://example.com/test/" will render that jade file.
-* Any .sass or .scss files are rendered to css before being sent to the client by requests to the same path except ending in .css.
+* Any .sass or .scss files are rendered to css before being sent to the client by requests to the same path ending in .css.
 * Rendering jade and sass files at the time the http response is sent does slightly impact performance, but it's very minimal in my experience and it beats having to manually compile them every time you make a change. Definitely keeps the project organized and minimal feeling.
 
 ### Other Features
